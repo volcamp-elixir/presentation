@@ -1,52 +1,74 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+	<title>reveal.js</title>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section class="landing-slide">
-					<div>
-						<img src="/images/Michelin-Logo.png" alt="Michelin logo" style="border-right: 5px solid grey; height: 180px; padding-right: 50px;margin: 0 auto 4rem auto; background: transparent;" />					
-						<img src="/images/Official_Elixir_logo.png" alt="Elixir logo" style="height: 150px; padding-left: 50px; margin: 0 auto 4rem auto; background: transparent;" />
-					</div>
-						
-					<h4>Pause fraîcheur !</h4>
-					<h6>Elixir au menu</h6>
-					
-					<p>
-						<small>Jonathan Hervault - Emilien Mottet</small>
-					</p>
-				</section>
-				<section>Slide 2</section>
-			</div>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/custom.css">
+	<link rel="stylesheet" href="dist/theme/beige.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="landing-slide">
+				<div>
+					<img src="/images/Michelin-Logo.png" alt="Michelin logo"
+						style="border-right: 5px solid grey; height: 180px; padding-right: 50px" />
+					<img src="/images/Official_Elixir_logo.png" alt="Elixir logo"
+						style="height: 150px; padding-left: 50px;" />
+				</div>
+
+				<h4>Pause fraîcheur !</h4>
+				<h6>Elixir au menu</h6>
+
+				<p>
+					<small>Jonathan Hervault - Emilien Mottet</small>
+				</p>
+			</section>
+			<section>
+				<img src="/images/photo_chartreuse.jpg" alt="Elixir Chartreuse"
+					style="height: 500px; padding-right: 50px;" />
+			</section>
+			<section>
+				<img src="/images/timeline2.png" alt="Languages timeline" />
+			</section>
+			<section>
+				<div style="vertical-align: middle;">
+					<img src="/images/Michelin-Logo.png" alt="Michelin logo"
+						style="height: 150px; vertical-align: middle;" />
+					<img src="/images/x_grey.png" alt="x separator"
+						style="height: 50px; padding-left: 20px; vertical-align: middle;" />
+					<img src="/images/kbrw.png" alt="KBRW logo"
+						style="height: 130px; padding-left: 20px; vertical-align: middle;" />
+				</div>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
 </html>
