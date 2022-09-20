@@ -14,6 +14,10 @@
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+	<!-- asciinema embeded player -->
+	<link rel="stylesheet" type="text/css" href="dist/asciinema-player.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="https://www.tonylykke.com/css/asciinema-player.css"> -->
 </head>
 
 <body>
@@ -103,14 +107,62 @@
 				</div>
 			</section>
 			<section>
-				<h3>Wrapping up</h3>
-				<ul>
-					<li>pattern matching</li>
-					<li>streams</li>
-					<li>async processes</li>
-					<li>REPL (iex)</li>
-					<li>module hot reload</li>
-				</ul>
+				<section>
+					<h3>Wrapping up</h3>
+					<ul>
+						<li><a href="#/pattern-match">Pattern Matching</a></li>
+						<li><a href="#/stream">Enum, Streams flows</a></li>
+						<li><a href="#/async">Async processes</a></li>
+						<li><a href="#/repl">REPL (iex)</a></li>
+						<li><a href="#/hot-reload">Module hot reload</a></li>
+					</ul>
+				</section>
+				<section id="pattern-match" data-markdown>
+					### Pattern matching
+					```elixir
+					x = 1
+					%{"number" => x} = 1
+					{_, x} = {42, 1}
+					"x = " <> x = "x = 1"
+					[x | _ ] = [1, 2, 3]
+					1 = x
+					```
+				</section>
+				<section id="stream" data-markdown>
+					### Enum and Streams
+					Bye bye, foreach loop !
+					```elixir
+					list = [1, 2 , 3]
+					sum = list
+					|> Stream.map(fn x -> x * 2 end)
+					|> Stream.filter(fn x -> x < 5 end)
+					|> Enum.sum()
+					6 = sum
+					```
+				</section>
+				<section id="async" data-markdown>
+					### Async process
+					Bye bye, foreach loop !
+					```elixir
+					# run every thnig in detached process
+					spawn(fn -> my_heavy_function() end)
+
+					# combine stream and async
+					[1,2,3] |> Task.async_stream(fn x -> my_heavy_function end) |> Stream.run()
+					```
+				</section>
+				<section id="repl">
+					<h3>Read-Eval-Print-Loop</h3>
+					<p>
+						<q cite="https://www.theodorerooseveltcenter.org/Quote-of-the-Day?page=45">Power always brings with it responsibility.</q>
+						-&nbsp;Theodore&nbsp;Roosevelt
+					</p>
+					<div class="r-stretch terminal-glyphs" id="test-v"></div>
+				</section>
+				<section id="hot-reload" data-markdown>
+					### Module hot reload
+					No more saying: "Je recompile et je relance"
+				</section>
 			</section>
 			<section>
 				<img src="images/phoenixframework-logo.png" alt="Phoenix framework" style="height: 300px;" />
@@ -140,6 +192,11 @@
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
 	</script>
+	<script src="dist/asciinema-player.min.js"></script>
+	<script>
+		AsciinemaPlayer.create('images/522744.cast', document.getElementById('test-v'), {fit: "both"});
+	</script>
+
 </body>
 
 </html>
