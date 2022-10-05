@@ -11,36 +11,50 @@
 	<link rel="stylesheet" href="dist/reveal.css">
 	<link rel="stylesheet" href="dist/custom.css">
 	<link rel="stylesheet" href="dist/theme/beige.css">
+	<link rel="stylesheet" href="plugin/questions/style.css">
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Theme used for syntax highlighted code -->
 	<link rel="stylesheet" href="plugin/highlight/monokai.css">
 
 	<!-- asciinema embeded player -->
 	<link rel="stylesheet" type="text/css" href="dist/asciinema-player.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="https://www.tonylykke.com/css/asciinema-player.css"> -->
+
+	<!-- qrcode -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+	<!-- seminar plugin -->
+	<script src="plugin/seminar/plugin.js"></script>
+	<script src="plugin/questions/plugin.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </head>
 
 <body>
 	<div class="reveal">
 		<div class="slides">
 			<section class="landing-slide">
-				
-				
-				<div>
-					<img src="images/elixir-logo-only.png" style="height: 200px;" alt="Elixir logo" />
-				</div>
+				<section>
+					<div>
+						<img src="images/elixir-logo-only.png" style="height: 200px;" alt="Elixir logo" />
+					</div>
 
-				<h4>Pause fraîcheur ! Elixir au menu</h4>
-				
-				<div style="margin-top: 10%; line-height:20px;">
-					<small>Jonathan Hervault & Emilien Mottet</small>
-					<br />
-					<small>@</small>
-					<br />
-					<img src="images/Michelin-Logo.png" alt="Michelin logo"
-						style="height: 80px; margin: 0;" />
-				</div>
-				
+					<h4>Pause fraîcheur ! Elixir au menu</h4>
+					<div style="margin-top: 10%; line-height:20px;">
+						<small>Jonathan Hervault & Emilien Mottet</small>
+						<br />
+						<small>@</small>
+						<br />
+						<img src="images/Michelin-Logo.png" alt="Michelin logo"
+											style="height: 80px; margin: 0;" />
+						<br />
+						<canvas id="qrcode-home" style="width:100px;height:100px;"></canvas>
+					</div>
+				</section>
+				<section>
+					<canvas id="qrcode" style="width:400px;height:400px;"></canvas>
+				</section>
 			</section>
 			<section>
 				<img src="images/photo_chartreuse.jpg" alt="Elixir Chartreuse"
@@ -181,10 +195,9 @@
 				<p><small><a href="https://phoenixframework.org">phoenixframework.org</a></small></p>
 			</section>
 			<section>
-				<h3>Elixir companies</h3>
-				
-				<img src="images/companies.png" style="height: 300px;" alt="Elixir companies" />
-				
+				<section <h3>Elixir companies</h3>
+					<img src="images/companies.png" style="height: 300px;" alt="Elixir companies" />
+				</section>
 			</section>
 		</div>
 	</div>
@@ -197,11 +210,61 @@
 		// More info about initialization & config:
 		// - https://revealjs.com/initialization/
 		// - https://revealjs.com/config/
+
+
+	 function getParameterByName(name, url) {
+			if (!url) {
+				url = window.location.href;
+			}
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+
+	 function addParam(url, param, value) {
+			var a = document.createElement('a'), regex = /(?:\?|&amp;|&)+([^=]+)(?:=([^&]*))*/g;
+			var match, str = []; a.href = url; param = encodeURIComponent(param);
+			while (match = regex.exec(a.search)) {
+				if (param != match[1]) str.push(match[1] + (match[2] ? "=" + match[2] : ""));
+			}
+			str.push(param + (value ? "=" + encodeURIComponent(value) : ""));
+			a.search = str.join("&");
+			return a.href;
+		}
+
+		var room = "volcamp";
+		var link = window.location.href;
+			/* document.getElementById("room").innerHTML = link;
+			document.getElementById("room").href = link; */
+		var qrcode = new QRious({ element: document.getElementById('qrcode'), level: 'H', padding: 25, size: 500, value: link });
+		var qrcode = new QRious({ element: document.getElementById('qrcode-home'), level: 'H', padding: 25, size: 500, value: link });
+
+
 		Reveal.initialize({
 			hash: true,
-
+			customcontrols: {
+				controls: [
+					{
+						id: 'toggle-questions',
+						title: 'Toggle Q&A dashboard (Q)',
+						icon: '<span class="fa-stack" style="margin: -24px -12px;padding:0;"><span class="fa fa-comment fa-stack-1x""></span><strong class="fa-stack-1x fa-inverse qna question-counter" style="font-size:0.5em;"></strong></span>',
+						action: 'RevealQnA.toggleQnA();'
+					}
+				]
+			},
+			seminar: {
+				server: "https://reveal-seminar.herokuapp.com",
+				port: 4433,
+				hash: '$2a$05$LaswbKkl/8grvsDWNgZApuaTHDHeWqEkJ5nQPilBaz/01J8NoF5Ti',
+				room: "volcamp_elixir",
+				autoJoin: true
+			},
 			// Learn about plugins: https://revealjs.com/plugins/
-			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealSeminar, RevealQnA, RevealCustomControls]
 		});
 	</script>
 	<script src="dist/asciinema-player.min.js"></script>
